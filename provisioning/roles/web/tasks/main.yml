@@ -7,14 +7,14 @@
 - name: ensure apache2 is running
   service: name=apache2 state=started
 
-- name: add oracle-java ppa
-  apt_repository: repo=ppa:webupd8team/java state=present
+# - name: add oracle-java ppa
+#   apt_repository: repo=ppa:webupd8team/java state=present
 
 - name: automatically accept oracle license
   shell: echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections
 
-- name: install oracle-java7
-  apt: pkg=oracle-java7-installer state=latest update-cache=yes force=yes
+# - name: install oracle-java7
+#   apt: pkg=oracle-java7-installer state=latest update-cache=yes force=yes
 
 - name: ensure tomcat7 is installed
   action: apt pkg={{item}} state=installed

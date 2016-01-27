@@ -1,10 +1,18 @@
 ---
 # file: roles/geoserver/tasks/download_install.yml
 - name: download GeoServer
-  get_url: url=http://sourceforge.net/projects/geoserver/files/GeoServer/2.4.0/geoserver-2.4.0-war.zip dest=/home/vagrant/geoserver-2.4.0-war.zip
+  command: wget http://downloads.sourceforge.net/project/geoserver/GeoServer/2.8.2/geoserver-2.8.2-war.zip?r=http%3A%2F%2Fgeoserver.org%2Frelease%2Fstable%2F&ts=1453906738&use_mirror=superb-dca2 -O geoserver.zip
+  args:
+    creates: /home/vagrant/geoserver.zip
+  tags:
+    - geoserver
 
 - name: unzip GeoServer
-  command: chdir=/home/vagrant/ /usr/bin/unzip geoserver-2.4.0-war.zip  geoserver.war
+  command: chdir=/home/vagrant/ /usr/bin/unzip geoserver.zip  geoserver.war
+  tags:
+    - geoserver
 
 - name: deploy GeoServer
   command: mv /home/vagrant/geoserver.war /var/lib/tomcat7/webapps/geoserver.war
+  tags:
+    - geoserver

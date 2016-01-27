@@ -4,17 +4,23 @@
 - name: check if geoserver exists
   shell: "[ -e /var/lib/tomcat7/webapps/geoserver.war ] && echo 'Found' || echo ''"
   register: geoserver_installed
+  tags:
+    - geoserver
 
 - name: download and deploy geoserver
   include: download_install.yml
   when: (not geoserver_installed.stdout)
+  tags:
+    - geoserver
 
 - name: enable apache proxy modules
   command: a2enmod proxy proxy_ajp
   notify: restart apache
+  tags:
+    - geoserver
 
 - name: copy geoserver configuration
   copy: src=geoserver.conf dest=/etc/apache2/conf-enabled/geoserver.conf
   notify: restart apache
-
-
+  tags:
+    - geoserver

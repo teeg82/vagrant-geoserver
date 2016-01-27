@@ -2,11 +2,12 @@
 # file: playbook.yml
 
 - hosts: all
-  vars: 
+  vars:
     remote_user: vagrant
-    sudo: True
-  roles:    
+  become: yes
+  roles:
     - common
+    - williamyeh.oracle-java
     - web
     - db
     - geoserver
